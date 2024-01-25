@@ -1,0 +1,18 @@
+# Використовуйте офіційний образ Python в якості базового образу
+FROM python:3.8
+
+# Встановіть Flask та інші необхідні пакети
+RUN pip install Flask gunicorn
+
+# Створіть директорію для додатку та скопіюйте файли в контейнер
+WORKDIR /app
+COPY . /app
+
+# Встановіть залежності Python
+RUN pip install -r requirements.txt
+
+# Відкрийте порт, який ви плануєте використовувати
+EXPOSE 5000
+
+# Запустіть додаток через gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
